@@ -7,7 +7,7 @@ module LazyModel
 		def initialize(model, attribute, enumerables = nil, custom_finders = {})
 			self.model 			= model
 			self.attribute 		= attribute
-			self.enumerables 	= Array(enumerables)
+			self.enumerables 	= format_enumerables(enumerables)
 			self.custom_finders = custom_finders
 		end
 
@@ -24,6 +24,12 @@ module LazyModel
 			rescue NameError
 				raise " attribute type \'#{column.type}\'' on \'#{attribute}\' is not supported "				
 			end
+		end
+
+		private
+
+		def format_enumerables(enumerables)
+			Array(enumerables).map{|enumerable| enumerable.underscore}
 		end
 
 	end

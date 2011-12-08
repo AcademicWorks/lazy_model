@@ -32,6 +32,10 @@ class TestLazyModel < Test::Unit::TestCase
 
 	context "LazyString" do
 
+		should "make all enumerables underscore case" do
+			assert Post.respond_to?(:old_class)
+		end
+
 		context "Instance Methods" do
 
 			should "provide attribute options as question methods" do
