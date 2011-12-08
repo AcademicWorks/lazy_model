@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Aaron Scruggs"]
   s.date = "2011-12-08"
-  s.description = "TODO: write common active_record methods in shorthand"
+  s.description = "write common active_record methods in shorthand"
   s.email = "ascruggs@academicworks.com"
   s.extra_rdoc_files = [
     "LICENSE.txt",
@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
     "README.rdoc",
     "Rakefile",
     "VERSION",
+    "lazy_model.gemspec",
     "lib/lazy_model.rb",
     "lib/lazy_model/lazy_boolean.rb",
     "lib/lazy_model/lazy_model.rb",
@@ -41,7 +42,7 @@ Gem::Specification.new do |s|
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
   s.rubygems_version = "1.8.10"
-  s.summary = "TODO: write common active_record methods in shorthand"
+  s.summary = "write common active_record methods in shorthand"
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
