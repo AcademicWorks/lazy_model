@@ -13,16 +13,16 @@ module LazyModel
 
 		def define_methods
 			#make sure the column exists
-			unless self.column = model.columns_hash[attribute.to_s]
-				raise "\'#{attribute}\' is not an attribute for \'#{model.to_s}\' model"
-			end
-
-			#pass to lazy class id supported
-			begin
-				klass = "LazyModel::Lazy#{column.type.to_s.camelize}".constantize
-				klass.new(self).define_methods
-			rescue NameError
-				warn " attribute type \'#{column.type}\'' on \'#{attribute}\' is not supported "				
+			if self.column = model.columns_hash[attribute.to_s]
+				#pass to lazy class id supported
+				begin
+					klass = "LazyModel::Lazy#{column.type.to_s.camelize}".constantize
+					klass.new(self).define_methods
+				rescue NameError
+					warn " attribute type \'#{column.type}\'' on \'#{attribute}\' is not supported "				
+				end
+			else
+				warn "\'#{attribute}\' is not an attribute for \'#{model.to_s}\' model"
 			end
 		end
 
