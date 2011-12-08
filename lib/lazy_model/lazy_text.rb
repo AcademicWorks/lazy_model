@@ -1,0 +1,1 @@
+LazyModel::LazyText = LazyModel::LazyString

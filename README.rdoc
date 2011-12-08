@@ -1,0 +1,58 @@
+= lazy_model
+
+More documentation to come.  Check the tests to see all the permutations.
+
+If you have boolean attributes on a model or a text/string attribute and a set list of values (think enumerable), then you can get several finders & instance methods for free. For instance:
+
+
+== Examples
+
+class Post < ActiveRecord::Base
+
+	CHOICES = ["one", "two", "three"]
+
+	lazy_model :archived #boolean
+	lazy_model :choice, Post::CHOICES, {:prime => ["one", "three"]} #string
+
+end
+
+Post.prime.archived #composable query where choice is in "one", "two"  and archived is true
+
+Post.one.nil_archived #composable query where choice is equal to "one" and archived is nil
+
+Post.not_two.not_archived # composable query where choice is not equal to two and archived is false
+
+Post.choice # composable query of all posts where choice is not nill
+
+post = Post.new
+
+post.one? #true if post.choice == "one"
+post.prime? #true if ["one", "three"].include?(post.choice)
+
+
+== Restrictions
+
+This is a ActiveRecord 3.x party.  
+
+
+== Notes
+
+The next simple addition is to add date support.  
+
+Even cooler would be to add some support for intellegent association methods.  I'd love to get some feedback on this.  What would that api look like?
+
+== Contributing to lazy_model
+ 
+* Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
+* Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
+* Fork the project
+* Start a feature/bugfix branch
+* Commit and push until you are happy with your contribution
+* Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.
+* Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
+
+== Copyright
+
+Copyright (c) 2011 AcademicWorks, inc.. See LICENSE.txt for
+further details.
+
