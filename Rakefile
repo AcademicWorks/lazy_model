@@ -17,8 +17,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "lazy_model"
   gem.homepage = "http://github.com/AcademicWorks/lazy_model"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: write common active_record methods in shorthand}
-  gem.description = %Q{TODO: write common active_record methods in shorthand}
+  gem.summary = %Q{write common active_record methods in shorthand}
+  gem.description = %Q{write common active_record methods in shorthand}
   gem.email = "ascruggs@academicworks.com"
   gem.authors = ["Aaron Scruggs"]
   # dependencies defined in Gemfile
