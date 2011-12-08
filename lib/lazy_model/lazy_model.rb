@@ -22,7 +22,7 @@ module LazyModel
 				klass = "LazyModel::Lazy#{column.type.to_s.camelize}".constantize
 				klass.new(self).define_methods
 			rescue NameError
-				raise " attribute type \'#{column.type}\'' on \'#{attribute}\' is not supported "				
+				warn " attribute type \'#{column.type}\'' on \'#{attribute}\' is not supported "				
 			end
 		end
 
