@@ -1,6 +1,6 @@
 module LazyModel
 	
-	class LazyString
+	class LazyState
 
 		include LazyModelSupport
 
