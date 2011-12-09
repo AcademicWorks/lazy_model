@@ -21,7 +21,7 @@ module LazyModel
 		def define_instance_enumerables
 			enumerables.each do |enumerable|
 				model.class_eval <<-LZY
-					def #{enumerable}?
+					def #{to_method_name(enumerable)}?
 						#{attribute} == "#{enumerable}"
 					end
 				LZY
@@ -31,7 +31,7 @@ module LazyModel
 		def define_instance_custom
 			custom_finders.each do |custom_finder, values|
 				model.class_eval <<-LZY
-					def #{custom_finder}?
+					def #{to_method_name(custom_finder)}?
 						#{values}.include?(#{attribute})
 					end
 				LZY
@@ -51,7 +51,7 @@ module LazyModel
 			model.class_eval <<-LZY
 				class << self
 
-					def #{attribute}(value = nil)
+					def #{to_method_name(attribute)}(value = nil)
 						table = self.arel_table[:#{attribute}]
 						
 						filter = case value.class.to_s
@@ -64,7 +64,7 @@ module LazyModel
 						where(filter)
 					end
 
-					def not_#{attribute}(value = nil)
+					def not_#{to_method_name(attribute)}(value = nil)
 						table = self.arel_table[:#{attribute}]
 
 						filter = case value.class.to_s
@@ -86,12 +86,12 @@ module LazyModel
 				model.class_eval <<-LZY
 					class << self
 
-						def #{enumerable}
-							#{attribute}("#{enumerable}")
+						def #{to_method_name(enumerable)}
+							#{to_method_name(attribute)}("#{enumerable}")
 						end
 
-						def not_#{enumerable}
-							not_#{attribute}("#{enumerable}")
+						def not_#{to_method_name(enumerable)}
+							not_#{to_method_name(attribute)}("#{enumerable}")
 						end
 
 					end
@@ -103,12 +103,12 @@ module LazyModel
 			custom_finders.each do |custom_finder, values|
 				model.class_eval <<-LZY
 					class << self
-						def #{custom_finder}
-							#{attribute}(#{values})
+						def #{to_method_name(custom_finder)}
+							#{to_method_name(attribute)}(#{values})
 						end
 
-						def not_#{custom_finder}
-							not_#{attribute}(#{values})
+						def not_#{to_method_name(custom_finder)}
+							not_#{to_method_name(attribute)}(#{values})
 						end
 					end
 				LZY
