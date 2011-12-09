@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "lazy_model"
-  s.version = "0.0.4"
+  s.version = "0.0.5"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Aaron Scruggs"]
-  s.date = "2011-12-08"
+  s.date = "2011-12-09"
   s.description = "write common active_record methods in shorthand"
   s.email = "ascruggs@academicworks.com"
   s.extra_rdoc_files = [
@@ -27,10 +27,8 @@ Gem::Specification.new do |s|
     "lazy_model.gemspec",
     "lib/lazy_model.rb",
     "lib/lazy_model/lazy_boolean.rb",
-    "lib/lazy_model/lazy_model.rb",
     "lib/lazy_model/lazy_model_support.rb",
-    "lib/lazy_model/lazy_string.rb",
-    "lib/lazy_model/lazy_text.rb",
+    "lib/lazy_model/lazy_state.rb",
     "test/helper.rb",
     "test/lazy_model.sqlite3",
     "test/support/data.rb",
