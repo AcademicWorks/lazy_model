@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "lazy_model"
-  s.version = "0.0.6"
+  s.version = "0.0.7"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Aaron Scruggs"]
-  s.date = "2011-12-09"
+  s.date = "2011-12-11"
   s.description = "write common active_record methods in shorthand"
   s.email = "ascruggs@academicworks.com"
   s.extra_rdoc_files = [
