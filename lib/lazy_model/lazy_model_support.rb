@@ -21,8 +21,8 @@ module LazyModelSupport
 
 	def calculate_atttribute_and_belongs_to
 		if raw_attribute.is_a?(Hash)
-			self.attribute 	= raw_attribute.keys.first
-			self.belongs_to = raw_attribute[attribute]
+			self.belongs_to = raw_attribute.keys.first
+			self.attribute 	= raw_attribute[attribute]
 		else
 			self.attribute = raw_attribute
 		end
