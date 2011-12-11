@@ -17,6 +17,11 @@ module LazyModel
 					def #{attribute}?
 						#{belongs_to_attribute}?
 					end
+
+					def #{attribute}
+						#{belongs_to_attribute}
+					end
+
 				LZY
 			end
 		end

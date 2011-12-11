@@ -14,8 +14,19 @@ module LazyModel
 		##### INSTANCE METHODS ##########
 
 		def define_instance_methods
+			define_instance_belongs_to
 			define_instance_enumerables
 			define_instance_custom
+		end
+
+		def define_instance_belongs_to
+			if belongs_to
+				model.class_eval <<-LZY
+					def #{attribute}
+						#{belongs_to_attribute}
+					end
+				LZY
+			end
 		end
 
 		def define_instance_enumerables
