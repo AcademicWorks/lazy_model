@@ -18,7 +18,6 @@ module LazyModel
 		LazyState.new(self, attribute, enumerables, custom_finders).define_methods
 	end
 
-
 end
 
 ActiveRecord::Base.extend LazyModel
