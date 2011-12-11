@@ -28,4 +28,33 @@ module LazyModelSupport
 		end
 	end
 
+	def belongs_to_attribute
+		belongs_to ? "#{belongs_to}.#{attribute}" : attribute
+	end
+
+	def define_join_finder_method
+		if belongs_to
+			model.class_eval <<-LZY
+				class << self
+					def #{joins_method_name}
+						joins(:#{belongs_to})
+					end
+				end
+			LZY
+		end
+	end
+
+	def klass
+		belongs_to ? "#{belongs_to.to_s.camelize}" : "self"
+	end
+
+	def joins_method_name
+		"with_#{belongs_to}"
+	end
+
+	def joins
+		belongs_to ? "#{joins_method_name}." : nil
+	end
+
+
 end
