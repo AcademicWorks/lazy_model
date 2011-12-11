@@ -8,7 +8,7 @@ module LazyModelSupport
 	def initialize(model, raw_attribute, enumerables = nil, custom_finders = {})
 		self.model 			= model
 		self.raw_attribute 	= raw_attribute
-		self.enumerables 	= enumerables
+		self.enumerables 	= Array(enumerables)
 		self.custom_finders = custom_finders
 		calculate_atttribute_and_belongs_to
 	end
