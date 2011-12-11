@@ -57,7 +57,7 @@ module LazyModel
 				model.class_eval <<-LZY
 					class << self
 						def #{joins_method_name}
-							"joins(:#{belongs_to})"
+							joins(:#{belongs_to})
 						end
 					end
 				LZY
