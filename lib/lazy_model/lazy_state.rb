@@ -5,6 +5,7 @@ module LazyModel
 		include LazyModelSupport
 
 		def define_methods
+			setup_custom_lazy_finders
 			define_instance_methods
 			define_class_methods
 		end
@@ -12,6 +13,13 @@ module LazyModel
 		private
 
 		##### INSTANCE METHODS ##########
+
+		def setup_custom_lazy_finders
+			return if custom_finders.empty? or  model.respond_to?(:custom_lazy_finders)
+
+			class << model ; attr_accessor :custom_lazy_finders ; end
+			model.custom_lazy_finders = {}
+		end
 
 		def define_instance_methods
 			define_instance_belongs_to
@@ -40,13 +48,6 @@ module LazyModel
 		end
 
 		def define_instance_custom
-			return if custom_finders.empty?
-
-			unless model.respond_to?(:custom_lazy_finders)
-				class << model ; attr_accessor :custom_lazy_finders ; end
-				model.custom_lazy_finders = {}
-			end
-
 			custom_finders.each do |custom_finder, values|
 				finder_name = to_method_name(custom_finder)
 				model.custom_lazy_finders[finder_name] = values
