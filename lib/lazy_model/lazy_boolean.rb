@@ -27,23 +27,17 @@ module LazyModel
 		end
 
 		def define_class_methods
-			model.class_eval <<-RUBY, __FILE__, __LINE__ + 1
-				class << self
+			{'true' => '', 'false' => 'not_', 'nil' => 'nil_'}.each do |predicate, prefix|
+				model.class_eval <<-RUBY, __FILE__, __LINE__ + 1
+					class << self
 	
-					def #{attribute}
-						#{joins}where(#{klass}.arel_table[:#{attribute}].eq(true))
-					end
+						def #{prefix}#{attribute}
+							#{joins}where(#{klass}.arel_table[:#{attribute}].eq(#{predicate}))
+						end
 
-					def not_#{attribute}
-						#{joins}where(#{klass}.arel_table[:#{attribute}].eq(false))
 					end
-
-					def nil_#{attribute}
-						#{joins}where(#{klass}.arel_table[:#{attribute}].eq(nil))
-					end
-
-				end
-			RUBY
+				RUBY
+			end
 		end
 
 
