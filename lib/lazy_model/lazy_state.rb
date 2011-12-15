@@ -40,10 +40,19 @@ module LazyModel
 		end
 
 		def define_instance_custom
+			return if custom_finders.empty?
+
+			unless model.respond_to?(:custom_lazy_finders)
+				class << model ; attr_accessor :custom_lazy_finders ; end
+				model.custom_lazy_finders = {}
+			end
+
 			custom_finders.each do |custom_finder, values|
+				finder_name = to_method_name(custom_finder)
+				model.custom_lazy_finders[finder_name] = values
 				model.class_eval <<-RUBY, __FILE__, __LINE__ + 1
-					def #{to_method_name(custom_finder)}?
-						#{values}.include?(#{belongs_to_attribute})
+					def #{finder_name}?
+						self.class.custom_lazy_finders['#{finder_name}'].include?(#{belongs_to_attribute})
 					end
 				RUBY
 			end
@@ -113,14 +122,15 @@ module LazyModel
 
 		def define_custom_class_finder_methods
 			custom_finders.each do |custom_finder, values|
+				finder_name = to_method_name(custom_finder)
 				model.class_eval <<-RUBY, __FILE__, __LINE__ + 1
 					class << self
 						def #{to_method_name(custom_finder)}
-							#{to_method_name(attribute)}(#{values})
+							#{to_method_name(attribute)}(custom_lazy_finders['#{finder_name}'])
 						end
 
 						def not_#{to_method_name(custom_finder)}
-							not_#{to_method_name(attribute)}(#{values})
+							not_#{to_method_name(attribute)}(custom_lazy_finders['#{finder_name}'])
 						end
 					end
 				RUBY
