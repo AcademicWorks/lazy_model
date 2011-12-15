@@ -13,7 +13,7 @@ module LazyModel
 
 		def define_instance_methods
 			if belongs_to
-				model.class_eval <<-LZY, __FILE__, __LINE__ + 1
+				model.class_eval <<-RUBY, __FILE__, __LINE__ + 1
 					def #{attribute}?
 						#{belongs_to_attribute}?
 					end
@@ -22,12 +22,12 @@ module LazyModel
 						#{belongs_to_attribute}
 					end
 
-				LZY
+				RUBY
 			end
 		end
 
 		def define_class_methods
-			model.class_eval <<-LZY, __FILE__, __LINE__ + 1
+			model.class_eval <<-RUBY, __FILE__, __LINE__ + 1
 				class << self
 	
 					def #{attribute}
@@ -43,7 +43,7 @@ module LazyModel
 					end
 
 				end
-			LZY
+			RUBY
 		end
 
 
