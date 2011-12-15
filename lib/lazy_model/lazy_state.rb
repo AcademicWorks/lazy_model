@@ -93,36 +93,33 @@ module LazyModel
 
 		def define_enumerables_class_finder_methods
 			enumerables.each do |enumerable|
-				model.class_eval <<-RUBY, __FILE__, __LINE__ + 1
-					class << self
+				['', 'not_'].each do |mode|
+					model.class_eval <<-RUBY, __FILE__, __LINE__ + 1
+						class << self
 
-						def #{to_method_name(enumerable)}
-							#{to_method_name(attribute)}("#{enumerable}")
+							def #{mode}#{to_method_name(enumerable)}
+								#{mode}#{to_method_name(attribute)}("#{enumerable}")
+							end
+
 						end
-
-						def not_#{to_method_name(enumerable)}
-							not_#{to_method_name(attribute)}("#{enumerable}")
-						end
-
-					end
-				RUBY
+					RUBY
+				end
 			end
 		end
 
 		def define_custom_class_finder_methods
 			custom_finders.each do |custom_finder, values|
 				finder_name = to_method_name(custom_finder)
-				model.class_eval <<-RUBY, __FILE__, __LINE__ + 1
-					class << self
-						def #{to_method_name(custom_finder)}
-							#{to_method_name(attribute)}(custom_lazy_finders['#{finder_name}'])
-						end
+				['', 'not_'].each do |mode|
+					model.class_eval <<-RUBY, __FILE__, __LINE__ + 1
+						class << self
+							def #{mode}#{to_method_name(custom_finder)}
+								#{mode}#{to_method_name(attribute)}(custom_lazy_finders['#{finder_name}'])
+							end
 
-						def not_#{to_method_name(custom_finder)}
-							not_#{to_method_name(attribute)}(custom_lazy_finders['#{finder_name}'])
 						end
-					end
-				RUBY
+					RUBY
+				end
 			end
 		end
 
