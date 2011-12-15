@@ -69,37 +69,25 @@ module LazyModel
 		end
 
 		def define_core_class_finder_methods
-			model.class_eval <<-RUBY, __FILE__, __LINE__ + 1
-				class << self
+			[['', 'not_'], ['not_', '']].each do |pos, neg|
+				model.class_eval <<-RUBY, __FILE__, __LINE__ + 1
+					class << self
 
-					def #{to_method_name(attribute)}(value = nil)
-						table = #{klass}.arel_table[:#{attribute}]
+						def #{pos}#{to_method_name(attribute)}(value = nil)
+							table = #{klass}.arel_table[:#{attribute}]
 						
-						filter = case value.class.to_s
-							when 'Array' 			then	table.in(value)
-							when 'NilClass' 		then	table.not_eq(value)
-							when 'String', 'Symbol' then	table.eq(value)
-							else raise "\'" + value + "\' with class \'"+value.class.to_s+ "\' is not valid comparitor"
+							filter = case value.class.to_s
+								when 'Array' 			then	table.#{pos}in(value)
+								when 'NilClass' 		then	table.#{neg}eq(value)
+								when 'String', 'Symbol' then	table.#{pos}eq(value)
+								else raise "\'" + value + "\' with class \'"+value.class.to_s+ "\' is not valid comparitor"
+							end
+
+							#{joins}where(filter)
 						end
-
-						#{joins}where(filter)
 					end
-
-					def not_#{to_method_name(attribute)}(value = nil)
-						table = #{klass}.arel_table[:#{attribute}]
-
-						filter = case value.class.to_s
-							when 'Array' 			then	table.not_in(value)
-							when 'NilClass'			then	table.eq(value)
-							when 'String', 'Symbol' then	table.not_eq(value)
-							else raise "\'" + value + "\' with class \'"+value.class.to_s+ "\' is not valid comparitor"
-						end
-
-						#{joins}where(filter)
-					end
-
-				end
-			RUBY
+				RUBY
+			end
 		end
 
 		def define_enumerables_class_finder_methods
