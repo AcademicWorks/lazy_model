@@ -17,15 +17,15 @@ class TestLazyModel < Test::Unit::TestCase
 		end
 
 		should "return only truthy values for truthy finder" do
-			assert_equal Post.archived.count, 1
+			assert_equal Post.archived.map{|p| p.choice}, ['one']
 		end
 
 		should "return only falsey values for falsey finder" do
-			assert_equal Post.not_archived.count, 1
+			assert_equal Post.not_archived.map{|p| p.choice}, ['two']
 		end
 
 		should "return only nil values for nil finder" do
-			assert_equal Post.nil_archived.count, 2
+			assert_equal Post.nil_archived.map{|p| p.choice}.sort_by{|c| c ? 1 : 0}, [nil, 'three']
 		end
 
 	end
