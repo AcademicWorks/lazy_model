@@ -21,7 +21,7 @@ module LazyModel
 
 		def define_instance_belongs_to
 			if belongs_to
-				model.class_eval <<-LZY
+				model.class_eval <<-LZY, __FILE__, __LINE__ + 1
 					def #{attribute}
 						#{belongs_to_attribute}
 					end
@@ -31,7 +31,7 @@ module LazyModel
 
 		def define_instance_enumerables
 			enumerables.each do |enumerable|
-				model.class_eval <<-LZY
+				model.class_eval <<-LZY, __FILE__, __LINE__ + 1
 					def #{to_method_name(enumerable)}?
 						#{belongs_to_attribute} == "#{enumerable}"
 					end
@@ -41,7 +41,7 @@ module LazyModel
 
 		def define_instance_custom
 			custom_finders.each do |custom_finder, values|
-				model.class_eval <<-LZY
+				model.class_eval <<-LZY, __FILE__, __LINE__ + 1
 					def #{to_method_name(custom_finder)}?
 						#{values}.include?(#{belongs_to_attribute})
 					end
@@ -60,7 +60,7 @@ module LazyModel
 		end
 
 		def define_core_class_finder_methods
-			model.class_eval <<-LZY
+			model.class_eval <<-LZY, __FILE__, __LINE__ + 1
 				class << self
 
 					def #{to_method_name(attribute)}(value = nil)
@@ -95,7 +95,7 @@ module LazyModel
 
 		def define_enumerables_class_finder_methods
 			enumerables.each do |enumerable|
-				model.class_eval <<-LZY
+				model.class_eval <<-LZY, __FILE__, __LINE__ + 1
 					class << self
 
 						def #{to_method_name(enumerable)}
@@ -113,7 +113,7 @@ module LazyModel
 
 		def define_custom_class_finder_methods
 			custom_finders.each do |custom_finder, values|
-				model.class_eval <<-LZY
+				model.class_eval <<-LZY, __FILE__, __LINE__ + 1
 					class << self
 						def #{to_method_name(custom_finder)}
 							#{to_method_name(attribute)}(#{values})
