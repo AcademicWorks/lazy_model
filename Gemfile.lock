@@ -30,9 +30,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activerecord (~> 3.0)
-  activesupport (~> 3.0)
-  bundler (~> 1.0.0)
+  activerecord (>= 3.0)
+  activesupport (>= 3.0)
+  bundler (>= 1.0.0)
   jeweler (~> 1.6.4)
   shoulda
   sqlite3-ruby
