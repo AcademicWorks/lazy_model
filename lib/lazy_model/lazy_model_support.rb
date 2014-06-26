@@ -34,13 +34,13 @@ module LazyModelSupport
 
 	def define_join_finder_method
 		if belongs_to
-			model.class_eval <<-LZY
+			model.class_eval <<-RUBY, __FILE__, __LINE__ + 1
 				class << self
 					def #{joins_method_name}
 						joins(:#{belongs_to})
 					end
 				end
-			LZY
+			RUBY
 		end
 	end
 
